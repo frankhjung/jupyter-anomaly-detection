@@ -2,6 +2,9 @@
 
 .PHONY: clean cleanall
 .SUFFIXES: .ipynb .html .pdf .tex .md
+.DEFAULT: render
+
+render:	 anomaly-detection.html
 
 %.tex: %.ipynb
 	@jupyter nbconvert --exec --to latex --template article.tplx --output $@ $<
