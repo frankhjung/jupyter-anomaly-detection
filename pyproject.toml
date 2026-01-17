@@ -1,0 +1,14 @@
+[project]
+name = "anomaly-detection"
+version = "0.1.0"
+description = "Reproduces anomaly detection results from XRDS article"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+dependencies = [
+  "jupyter",
+  "matplotlib",
+  "numpy",
+  "pandas",
+  "scikit-learn",
+]
