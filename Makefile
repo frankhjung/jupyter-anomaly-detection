@@ -19,7 +19,7 @@ render:	 anomaly-detection.html
 	@pandoc $< -o $@
 
 clean:
-	@$(RM) -rf *.aux *.out *.log *.bbl *.blg *.tex *_files/ *.png
+	@$(RM) -rf *.aux *.out *.log *.bbl *.blg *.tex *_files/
 
 cleanall: clean
 	@$(RM) -rf *.html *.pdf
