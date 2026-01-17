@@ -1,5 +1,5 @@
 ---
-  
+
 name: publish article
 
 on:
@@ -11,13 +11,14 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  NOTEBOOK_FILE: anomaly-detection.ipynb
+
 jobs:
+
   build:
-    name: publish article to pages
+    name: build article
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: shallow checkout
@@ -27,16 +28,29 @@ jobs:
 
       - name: build with jupyter
         run: |
-          mkdir -p public
-          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace \
+          docker run --rm \
+            -u root \
+            -v ${{ github.workspace }}:/workspace -w /workspace \
             jupyter/datascience-notebook:x86_64-ubuntu-22.04 \
-            jupyter nbconvert --exec --to html --output public/index.html anomaly-detection.ipynb
+            bash -c "mkdir -p public && jupyter nbconvert --to html --output-dir=public --output=index ${{ env.NOTEBOOK_FILE }}"
+
+      - name: verify build output
+        run: test -f public/index.html
 
       - name: upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: public
 
+  deploy:
+    name: deploy to pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: deploy to pages
         id: deployment
         uses: actions/deploy-pages@v4
