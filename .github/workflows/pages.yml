@@ -1,0 +1,42 @@
+---
+  
+name: publish article
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    name: publish article to pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: shallow checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: build with jupyter
+        run: |
+          mkdir -p public
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace \
+            jupyter/datascience-notebook:x86_64-ubuntu-22.04 \
+            jupyter nbconvert --exec --to html --output public/index.html anomaly-detection.ipynb
+
+      - name: upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: deploy to pages
+        id: deployment
+        uses: actions/deploy-pages@v4

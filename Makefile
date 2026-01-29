@@ -7,19 +7,19 @@
 render:	 anomaly-detection.html
 
 %.tex: %.ipynb
-	@jupyter nbconvert --exec --to latex --template article.tplx --output $@ $<
+	@uv run jupyter nbconvert --execute --to latex --template article.tplx --output $@ $<
 
 %.pdf: %.tex
 	@pdflatex $<
 
 %.html: %.ipynb
-	@jupyter nbconvert --exec --to html --output $@ $<
+	@uv run jupyter nbconvert --execute --to html --output $@ $<
 
 %.html : %.md
 	@pandoc $< -o $@
 
 clean:
-	@$(RM) -rf *.aux *.out *.log *.bbl *.blg *.tex *_files/ *.png
+	@$(RM) -rf *.aux *.out *.log *.bbl *.blg *.tex *_files/
 
 cleanall: clean
 	@$(RM) -rf *.html *.pdf
