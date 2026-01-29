@@ -1,15 +1,20 @@
 # Anomaly Detection
 
-Anomalies are patterns in the data that do not conform to a well-defined notion
-of normal behaviour.
+Anomalies are patterns in data that do not conform to a well-defined notion
+of normal behavior.
 
-Techniques used to detection anomalies typically require training before using
-on new data.
+Techniques used to detect anomalies typically require training before being
+applied to new data.
 
-This [Jupyter Notebook](http://jupyter.org/) reproduces the results from [Oana
-Niculaescu](https://www.linkedin.com/in/oana-niculaescu-1aa72b53/)'s article in
-[XRDS](https://xrds.acm.org/), [Applying Data Science for Anomaly and Change
-Point Detection](http://xrds.acm.org/article.cfm?aid=3265925).
+This Jupyter Notebook reproduces the results from Oana Niculaescu's XRDS article:
+["Applying Data Science for Anomaly and Change Point Detection"](http://xrds.acm.org/article.cfm?aid=3265925).
+
+## Features
+
+- Statistical anomaly detection methods
+- Change point detection algorithms
+- Data visualization with matplotlib
+- Reproducible analysis with Jupyter notebooks
 
 ## Prerequisites
 
@@ -24,46 +29,65 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ## Setup
 
-Install project dependencies:
+Create a virtual environment and install dependencies:
 
 ```bash
 uv sync
 ```
 
-## Build
-
-To start [Jupyter Notebook](http://jupyter.org/) in background (will open
-browser):
+Activate the virtual environment:
 
 ```bash
-uv run jupyter notebook &
+source .venv/bin/activate  # On Linux/macOS
+# or
+.venv\Scripts\activate  # On Windows
 ```
 
-To stop Jupyter notebooks:
+## Usage
+
+### Running the Notebook
+
+Start Jupyter Notebook:
 
 ```bash
-uv run jupyter notebook stop
+uv run jupyter notebook
 ```
 
-## Output
+Or use Jupyter Lab for a modern interface:
 
-To output a notebook as HTML:
+```bash
+uv run jupyter lab
+```
+
+Then open [anomaly-detection.ipynb](anomaly-detection.ipynb) in the browser.
+
+### Exporting Results
+
+Export the notebook to HTML:
 
 ```bash
 uv run jupyter nbconvert --execute --to html anomaly-detection.ipynb
 ```
 
-To output a notebook as PDF or LaTeX:
+Export to PDF (requires LaTeX):
 
 ```bash
-uv run jupyter nbconvert --execute --to latex \
-  --template article.tplx anomaly-detection.ipynb
+uv run jupyter nbconvert --execute --to pdf anomaly-detection.ipynb
 ```
 
-## Customise
+Export to LaTeX:
 
-To further customise output of a notebook, see
+```bash
+uv run jupyter nbconvert --execute --to latex anomaly-detection.ipynb
+```
 
-* [NB Format (PDF)](https://media.readthedocs.org/pdf/nbformat/latest/nbformat.pdf)
-* [Customizing nbconvert (blog)](http://markus-beuckelmann.de/blog/customizing-nbconvert-pdf.html)
-* [uv package manager](https://docs.astral.sh/uv/)
+## Resources
+
+- [Jupyter Notebook Documentation](https://jupyter-notebook.readthedocs.io/)
+- [nbconvert Documentation](https://nbconvert.readthedocs.io/)
+- [uv Package Manager](https://docs.astral.sh/uv/)
+- [Original XRDS Article](http://xrds.acm.org/article.cfm?aid=3265925)
+
+## License
+
+See [LICENSE](LICENSE) for details.
